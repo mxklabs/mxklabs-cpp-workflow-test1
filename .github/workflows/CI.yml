@@ -7,33 +7,23 @@ on:
   pull_request: {}
 
 jobs:
-  Windows:
-    name: build-windows
-    runs-on: [self-hosted, windows]
+
+  build_install:
+    name: Build c++ library
+    runs-on: [ubuntu-latest]
 
     steps:
-    - name: Checkout
       uses: actions/checkout@v1
-      with:
-          submodules: recursive
-
-    - name: Installing vcpkg (windows)
+    - name: Make build dir
       run: |
-        cd ..
-        git clone https://github.com/Microsoft/vcpkg.git
-        cd vcpkg
-        git checkout --force 2020.01
-        .\bootstrap-vcpkg.bat
-        .\vcpkg.exe install cppzmq:x64-windows
-
-    - name: Running cmake (windows)
-      run: |
-        cd ${{ github.workspace }}
         mkdir build
         cd build
-        cmake .. -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/../vcpkg/scripts/buildsystems/vcpkg.cmake
-
-    - name: Build Solution (windows)
+    - name: Cmake Configure
       run: |
-        cd build
-        MSBuild.exe CMakeHelloWorld.sln
+        cmake ..
+    - name: Cmake Build
+      run: |
+        cmake --build .
+    - name: Cmake Install
+      run: |
+        cmake --install .
