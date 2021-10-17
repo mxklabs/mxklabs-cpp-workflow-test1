@@ -35,7 +35,6 @@ install(TARGETS ${PROJECT_NAME} # EXPORT ExampleCppLib1Config
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
 
-message("CMAKE_INSTALL_INCLUDEDIR=${CMAKE_INSTALL_INCLUDEDIR}")
 set(INCLUDE_INSTALL_DIR include/ ... )
 
 # Create module config.
@@ -54,4 +53,4 @@ install(
     FILES
       ${CMAKE_CURRENT_BINARY_DIR}/ExampleCppLib1Config.cmake
       ${CMAKE_CURRENT_BINARY_DIR}/ExampleCppLib1ConfigVersion.cmake
-    DESTINATION cmake )
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/ExampleCppLib1/cmake )
