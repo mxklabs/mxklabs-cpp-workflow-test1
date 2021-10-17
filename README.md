@@ -1,4 +1,4 @@
-# mxklabs-example-cpp-app
+# mxklabs-example-cpp-lib
 
 A simple c++ library to demonstrate `mxklabs-pkgs`.
 
