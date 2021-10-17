@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required (VERSION 3.21.2)
 cmake_policy(SET CMP0048 NEW)
 project (example_cpp_lib1 VERSION 1.0.0)
 
@@ -35,12 +35,12 @@ install(TARGETS ${PROJECT_NAME} # EXPORT ExampleCppLib1Config
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
 
-set(INCLUDE_INSTALL_DIR include/ ... )
+set(EXAMPLE_CPP_LIB1_INCLUDE_DIR include)
 
 # Create module config.
 configure_package_config_file(ExampleCppLib1Config.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/ExampleCppLib1Config.cmake
-    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/ExampleCppLib1/cmake
-    PATH_VARS INCLUDE_INSTALL_DIR)
+    INSTALL_DESTINATION cmake
+    PATH_VARS EXAMPLE_CPP_LIB1_INCLUDE_DIR)
 
 # Create module version.
 write_basic_package_version_file(
@@ -53,4 +53,4 @@ install(
     FILES
       ${CMAKE_CURRENT_BINARY_DIR}/ExampleCppLib1Config.cmake
       ${CMAKE_CURRENT_BINARY_DIR}/ExampleCppLib1ConfigVersion.cmake
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/ExampleCppLib1/cmake )
+    DESTINATION cmake )

@@ -1,7 +1,7 @@
 set(EXAMPLE_CPP_LIB1_VERSION x.y.z)
-...
+
 @PACKAGE_INIT@
-...
-set_and_check(EXAMPLE_CPP_LIB1_INCLUDE_DIR "@PACKAGE_INCLUDE_INSTALL_DIR@")
+
+set_and_check(EXAMPLE_CPP_LIB1_INCLUDE_DIR "@PACKAGE_EXAMPLE_CPP_LIB1_INCLUDE_DIR@")
 
 check_required_components(ExampleCppLib1)
