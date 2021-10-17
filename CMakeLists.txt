@@ -12,27 +12,27 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # Add include directories.
 include_directories(include)
 
-# Set sources to compile.
-set(SOURCES
-  src/example_cpp_lib1/foo.cpp)
-
-# Set public headers.
-set(HEADERS
-  include/example_cpp_lib1/foo.hpp)
+# Find sources and headers.
+file(GLOB_RECURSE EXAMPLE_CPP_LIB1_SOURCE_FILES "src/*.cpp" "src/*.hpp*")
+file(GLOB_RECURSE EXAMPLE_CPP_LIB1_HEADER_FILES "include/*.hpp*")
 
 # Create a shared library.
-add_library(example_cpp_lib1 SHARED ${SOURCES})
+add_library(${PROJECT_NAME} SHARED ${EXAMPLE_CPP_LIB1_HEADER_FILES} ${EXAMPLE_CPP_LIB1_SOURCE_FILES})
 
 # Set version of shared library.
-set_target_properties(example_cpp_lib1 PROPERTIES
+set_target_properties(${PROJECT_NAME} PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION_MAJOR}
-    PUBLIC_HEADER ${HEADERS})
+    PUBLIC_HEADER ${EXAMPLE_CPP_LIB1_HEADER_FILES})
 
-# Set private include directory.
-target_include_directories(example_cpp_lib1 PRIVATE include)
+# Set include directories.
+target_include_directories(${PROJECT_NAME} PUBLIC include/)
+target_include_directories(${PROJECT_NAME} PRIVATE src/)
+
 
 # Install.
-install(TARGETS example_cpp_lib1
+install(TARGETS ${PROJECT_NAME}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
