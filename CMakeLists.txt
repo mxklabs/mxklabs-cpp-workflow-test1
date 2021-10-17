@@ -1,21 +1,38 @@
 cmake_minimum_required (VERSION 2.8)
-project (CMakeHelloWorld)
+cmake_policy(SET CMP0048 NEW)
+project (example_cpp_lib1 VERSION 1.0.1)
 
-#version number
-set (CMakeHelloWorld_VERSION_MAJOR 1)
-set (CMakeHelloWorld_VERSION_MINOR 0)
+# Use CMAKE_INSTALL_*DIR variables.
+include(GNUInstallDirs)
 
-#find dependencies
-#find_package(cppzmq REQUIRED)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Add include directories.
+include_directories(include)
 
-#include the subdirectory containing our libs
-add_subdirectory (Hello)
-include_directories(Hello)
-#indicate the entry point for the executable
-add_executable (CMakeHelloWorld Hello HelloWorld.cpp)
+# Set sources to compile.
+set(SOURCES
+  src/example_cpp_lib1/foo.cpp)
 
-# Indicate which libraries to include during the link process.
-target_link_libraries (CMakeHelloWorld Hello)
+# Set public headers.
+set(HEADERS
+  include/example_cpp_lib1/foo.hpp)
 
-install (TARGETS CMakeHelloWorld DESTINATION bin)
+# Create a shared library.
+add_library(example_cpp_lib1 SHARED ${SOURCES})
+
+# Set version of shared library.
+set_target_properties(example_cpp_lib1 PROPERTIES
+    VERSION ${PROJECT_VERSION}
+    SOVERSION ${PROJECT_VERSION_MAJOR}
+    PUBLIC_HEADER ${HEADERS})
+
+# Set private include directory.
+target_include_directories(example_cpp_lib1 PRIVATE include)
+
+# Install.
+install(TARGETS example_cpp_lib1
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
