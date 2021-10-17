@@ -1,16 +1,14 @@
 cmake_minimum_required (VERSION 2.8)
 cmake_policy(SET CMP0048 NEW)
-project (example_cpp_lib1 VERSION 1.0.1)
+project (example_cpp_lib1 VERSION 1.0.0)
 
-# Use CMAKE_INSTALL_*DIR variables.
+# CMake stuff we need.
 include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_CXX_EXTENSIONS OFF)
-
-# Add include directories.
-include_directories(include)
 
 # Find sources and headers.
 file(GLOB_RECURSE EXAMPLE_CPP_LIB1_SOURCE_FILES "src/*.cpp" "src/*.hpp*")
@@ -31,8 +29,29 @@ target_include_directories(${PROJECT_NAME} PUBLIC include/)
 target_include_directories(${PROJECT_NAME} PRIVATE src/)
 
 # Install.
-install(TARGETS ${PROJECT_NAME}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+install(TARGETS ${PROJECT_NAME} # EXPORT ExampleCppLib1Config
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
+
+message("CMAKE_INSTALL_INCLUDEDIR=${CMAKE_INSTALL_INCLUDEDIR}")
+set(INCLUDE_INSTALL_DIR include/ ... )
+
+# Create module config.
+configure_package_config_file(ExampleCppLib1Config.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/ExampleCppLib1Config.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/ExampleCppLib1/cmake
+    PATH_VARS INCLUDE_INSTALL_DIR)
+
+# Create module version.
+write_basic_package_version_file(
+    ${CMAKE_CURRENT_BINARY_DIR}/ExampleCppLib1ConfigVersion.cmake
+    VERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}
+    COMPATIBILITY SameMajorVersion)
+
+# Install cmake files.
+install(
+    FILES
+      ${CMAKE_CURRENT_BINARY_DIR}/ExampleCppLib1Config.cmake
+      ${CMAKE_CURRENT_BINARY_DIR}/ExampleCppLib1ConfigVersion.cmake
+    DESTINATION cmake )
