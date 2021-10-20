@@ -10,7 +10,7 @@ Foo::Foo(const std::string& msg_) :
 }
 
 void Foo::printMsg() {
-  std::cout << "from example_cpp_lib1: " << msg << std::endl;
+  std::cout << "from example_cpp_lib1> " << msg << std::endl;
 }
 
 }
