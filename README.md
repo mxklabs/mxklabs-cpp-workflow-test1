@@ -1,6 +1,6 @@
 # mxklabs-example-cpp-lib
 
-A simple c++ library to demonstrate `mxklabs-pkgs`.
+A simple shared c++ library to demonstrate `mxklabs-pkgs`.
 
 **NOTE**: This repository is set up for educational purposes and serves no useful purpose.
 
