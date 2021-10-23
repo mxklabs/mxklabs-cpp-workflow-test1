@@ -1,4 +1,5 @@
 #include "example_cpp_lib1/foo.hpp"
+#include "example_cpp_lib1/githash.hpp"
 
 #include <iostream>
 
@@ -10,7 +11,7 @@ Foo::Foo(const std::string& msg_) :
 }
 
 void Foo::printMsg() {
-  std::cout << "from example_cpp_lib1> " << msg << std::endl;
+  std::cout << "from example_cpp_lib1@" << gitHash << "> " << msg << std::endl;
 }
 
 }
